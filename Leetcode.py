@@ -140,6 +140,21 @@ class Solution:
                 remainder_map[rem] = 1
         return result
 
+# leetcode day 10-06-2024 challenge
+def heightChecker( heights: List[int]) -> int:
+    expected = sorted(heights)
+    print(list(zip(expected,heights)))
+    count = sum(a!=b for a,b in zip(expected,heights))
+
+    return count
+
+
+
+
+
 
 if __name__ == '__main__':
+    heights = [1,2,3,5,4]
+    ans = heightChecker(heights)
+    print(ans)
     pass
