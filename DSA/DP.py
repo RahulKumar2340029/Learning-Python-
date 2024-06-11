@@ -7,6 +7,80 @@ from typing import *
 from sys import stdin
 
 """2D Dynamic Programming """
+"""Triangle: https://leetcode.com/problems/triangle/description/"""
+def minimumTotal(triangle: List[List[int]]) -> int:
+        memo = {}
+        def f(i,j):
+            if i==len(triangle)-1: #can't exceed n-1 because if reaches there then base cond hit and prog stops
+                return triangle[i][j]#why not minimum from last row ??
+            if (i,j) in memo:
+                return memo[(i,j)]
+            p1 = f(i+1,j) + triangle[i][j]
+            p2 = f(i+1,j+1) + triangle[i][j]
+            memo[(i,j)]  = min(p1,p2)
+            return memo[(i,j)]
+        return f(0,0)
+
+
+print(minimumTotal([[-10]]))
+
+
+
+
+"""minimum path sum"""
+def minPathSum(grid: List[List[int]]) -> int:
+    """left to bottom right i.e 0 0 to m-1 , n-1"""
+    memo = {}
+    def f(m , n):
+        if m==0 and n==0:
+            return grid[0][0]
+        if m<0 or n<0:
+            return float('inf')
+        if (m,n) in memo:
+            return memo[(m,n)]
+        up = grid[m][n] + f(m-1,n)
+        left = grid[m][n] + f(m,n-1)
+        memo[(m,n)] = min(up,left)
+        return memo[(m,n)]
+    return f(len(grid)-1,len(grid[0])-1)
+# tabulation
+def minPathSumII(grid:List[List[int]]) -> int:
+    m,n= len(grid), len(grid[0])
+    dp = [[0]*n for _ in range(m)]
+    dp[0][0] = grid[0][0]
+
+    for i in range(1,m):
+        dp[0][i] = dp[0][i-1] + grid[0][i]
+
+    for i in range(1,n):
+        dp[i][0] = dp[i-1][0] + grid[i][0]
+
+    for i in range(1,m):
+        for j in range(1,n):
+            dp[i][j] = min(dp[i-1][j] , dp[i][j-1]) + grid[i][j]
+
+    return dp[m-1][n-1]
+
+print(minPathSum([[1,2,3],[4,5,6]]))
+"""Unique pathII with obstacles -1"""
+# def mazeObstacles(n, m, mat):
+#     memo = {}
+#     def f(i,j):
+#         if i>=0 and j>=0 and mat[i][j]==-1:
+#             return 0
+#
+#         if i<0 or j<0:
+#             return 0
+#         if i==0 and j==0:
+#             return 1
+#         # special memo
+#         if (i,j) in memo:
+#             return memo[(i,j)]
+#         memo[(i,j)] =  f(i-1,j) + f(i,j-1)
+#         return memo[(i,j)]
+#     return f(n-1,m-1)
+#     pass
+# print(mazeObstacles())
 """count all path from (0,0) to (n-1,m-1): https://www.naukri.com/code360/library/count-all-number-of-paths-of-a-given-matrix"""
 #using recursion
 def countPaths1(i,j)->int:
@@ -39,22 +113,22 @@ def countPath2(i, j):
     return f(i-1,j-1)
     pass
 #tabulation
-def countPath3(i, j):
-    dp = [[0 for _ in range(j + 1)] for _ in range(i + 1)]  # Corrected dimensions
-    for m in range(i + 1):
-        dp[m][0] = 0
-    for n in range(j + 1):
-        dp[0][n] = 0
+# def countPath3(i, j):
+#     dp = [[0 for _ in range(j + 1)] for _ in range(i + 1)]  # Corrected dimensions
+#     for m in range(i + 1):
+#         dp[m][0] = 0
+#     for n in range(j + 1):
+#         dp[0][n] = 0
+#
+#     dp[0][0] = 1
+#     for m in range(1, i + 1):
+#         for n in range(1, j + 1):
+#             dp[m][n] = dp[m - 1][n] + dp[m][n - 1]
+#
+#     return dp[i][j]
 
-    dp[0][0] = 1
-    for m in range(1, i + 1):
-        for n in range(1, j + 1):
-            dp[m][n] = dp[m - 1][n] + dp[m][n - 1]
 
-    return dp[i][j]
-
-
-print(countPath3(3,2))
+# print(countPath3(3,2))
 
 
 """https://www.naukri.com/code360/problems/ninja-s-training_3621003?leftPanelTabValue=PROBLEM"""
