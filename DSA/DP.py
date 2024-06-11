@@ -5,6 +5,80 @@ from math import *
 
 from typing import *
 from sys import stdin
+"""DP on subsequence"""
+"""Count subset with sum k : https://www.naukri.com/code360/problems/number-of-subsets_3952532"""
+def findWays(arr2: List[int], k: int) -> int:
+    memo = {}
+    arr = list(reversed(arr2))
+    def f(index,sum):
+        if sum == 0:
+            return 1
+
+        if index == 0:
+            return 1 if arr[0]==sum else 0
+
+        if (index,sum) in memo:
+            return memo[(index,sum)]
+        not_pick = f(index-1,sum)
+        pick = 0
+        if arr[index]<=sum:
+            pick = f(index-1,sum - arr[index])
+
+        memo[(index,sum)] = pick + not_pick
+        return memo[(index,sum)]
+    return f(len(arr)-1,k)%(10**9+7)
+
+print(findWays([0,1,3],4))
+
+
+"""Partition equal subset sum: https://leetcode.com/problems/partition-equal-subset-sum/description/"""
+def canPartition(nums: List[int]) -> bool:
+    if (sum(nums)&1)==1:
+        return False
+    target = sum(nums)//2
+    return subsetSumToK(len(nums),target,nums)
+    pass
+
+"""---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"""
+# def subsetSumToK(n, target, arr):
+#     memo = {}
+#
+#     def f(index,k):
+#         if k==0:return True
+#         if index==0:
+#             return arr[index]==k
+#         if (index,k) in memo:
+#             return memo[(index,k)]
+#         not_take = f(index-1,k)
+#         take = False
+#         if arr[index]<=k:
+#             take = f(index-1,k - arr[index])
+#         memo[(index,k)] = take or not_take
+#         return memo[(index,k)]
+#     return f(n-1,target)
+#     pass
+# tabulation
+def subsetSumToK(n,k,arr:List[int])->bool:
+    dp = [[False]*(k+1) for _ in range(n)]
+    """whatever be the index values for k = 0 return True"""
+    for i in range(0,n):
+        dp[i][0] = True
+    """whatever be the k values for index = 0 return False"""
+    # for i in range(1,k):
+    #     dp[0][i] = False
+    if arr[0] <= k:
+        dp[0][arr[0]] = True
+    for i in range(1,n):
+        for j in range(1,k+1):
+            not_take = dp[i-1][j]
+            take = False
+            if arr[i] <= j:
+                take = dp[i-1][j - arr[i]]
+            dp[i][j] = take or not_take
+    return dp[n-1][k]
+
+
+print(subsetSumToK(5,4,[2,5,1,6,7]))
 
 """2D Dynamic Programming """
 """Triangle: https://leetcode.com/problems/triangle/description/"""
