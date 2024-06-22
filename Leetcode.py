@@ -240,6 +240,24 @@ class BrowserHistory:
     def __init__(self,homepage:str):
         self.current = Node(homepage)
 
+        def main():
+            import sys
+            input = sys.stdin.read
+            data = input().split()
+
+            n = int(data[0])
+            blocks = list(map(int, data[1:n + 1]))
+
+            end_pos = (n // 2) + (n % 2)
+
+            for i in range(0, end_pos, 2):
+                blocks[i], blocks[n - 1 - i] = blocks[n - 1 - i], blocks[i]
+
+            print(" ".join(map(str, blocks)))
+
+        if __name__ == "__main__":
+            main()
+
     def visit(self, url: str) -> None:
         new_node = Node(url)
         self.current.next = new_node
