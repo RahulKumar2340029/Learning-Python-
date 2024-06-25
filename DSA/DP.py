@@ -31,6 +31,7 @@ def findWays(arr2: List[int], k: int) -> int:
 print(findWays([0,1,3],4))
 
 
+
 """Partition equal subset sum: https://leetcode.com/problems/partition-equal-subset-sum/description/"""
 def canPartition(nums: List[int]) -> bool:
     if (sum(nums)&1)==1:

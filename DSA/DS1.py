@@ -123,6 +123,23 @@ class LinkedList(object):
             itr = itr.next
         print(listr)
 
+def fibonacci(n):
+    memo = {}
+    def f(m):
+        if m==1 or m==2:
+            return 1
+        if m in memo:
+            return memo[m]
+        memo[m] =  f(m-1) + f(m-2)
+        return memo[m]
+    return f(n)
+
+# print(list(fibonacci(i) for i in range(1,10)))
+
+def factorial(n):
+    return (1 if n==0 or n==1 else n*factorial(n-1))
+print(list(factorial(i) for i in range(0,10)))
+
 #main function
 if __name__ == '__main__':
     ll = LinkedList()
