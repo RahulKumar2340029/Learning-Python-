@@ -11,8 +11,104 @@ sys.setrecursionlimit(10**6)
 # for _ in range(int(input())):alice_and_books()
 # fs
 from collections import Counter
+from collections import deque
+
+# def tiredness():
+#     n = int(input().strip())
+#     m = int(input().strip())
+#     mid = (n+m)//2;
+#     def f(start,end):
+#         dist = abs(start - end)
+#         return (dist*(dist+1)//2)
+#
+#     ans = f(n,mid) + f(m,mid)
+#     print(ans)
+#
+# tiredness()
+
+# def f():
+#     n = int(input())
+#     s = input()
+#     for i in range(n - 1):
+#         if s[i] > s[i + 1]:
+#             return "YES\n{} {}".format(i + 1, i + 2)
+#
+#     return "NO"
+#
+# print(f())
+
+# BOGOSORT
+def make_good_array(arr):
+    arr.sort()
+    print(" ".join(map(str, arr)))
 
 
+n = int(input())
+arr = list(map(int, input().split()))
+make_good_array(arr)
+
+
+
+
+def process_test_cases():
+    t = int(input().strip())
+    results = []
+    for _ in range(t):
+        a = input().strip()
+        b = input().strip()
+        result = min_length_substring_subsequence(a, b)
+        results.append(result)
+
+    for res in results:
+        print(res)
+
+
+# Example usage
+# process_test_cases()
+
+
+# def f():
+#     n = int(input())
+#     for i in range(n):
+#         x,y = map(int,input().split())
+#         print('YES' if y>=-1 else "NO")
+# f()
+def main():
+    n = int(input())
+    a = [int(input()) for _ in range(n)]
+
+    for i in range(0, n // 2, 2):
+        a[i], a[n - i - 1] = a[n - i - 1], a[i]
+
+    for i in range(n):
+        print(a[i], end=" ")
+    print()
+
+
+# main()
+def max_final_value(a):
+    c = 0
+    for ai in a:
+        if c + ai >= 0:
+            c = c + ai
+        else:
+            c = -(c + ai)
+    return c
+# for _ in range(int(input())): max_final_value(int(input()))
+# def check_hello(s):
+#     target = "hello"
+#     target_index = 0
+#
+#     for char in s:
+#         if char == target[target_index]:
+#             target_index += 1
+#         if target_index == len(target):
+#             print("YES")
+#             return
+#
+#     print("NO")
+#
+# check_hello(input())
 def even_odd():
     n, b = map(int, input().split())
     arr = list(map(int, input().split()))
@@ -43,7 +139,7 @@ def even_odd():
     print(ans)
 
 
-even_odd()
+# even_odd()
 
 
 # n = int(input().strip())
